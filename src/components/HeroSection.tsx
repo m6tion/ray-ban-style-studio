@@ -3,69 +3,70 @@ import heroBg from "@/assets/hero-bg.jpg";
 
 interface HeroSectionProps {
   onStartCustomizing: () => void;
+  onTryOn: () => void;
 }
 
-export default function HeroSection({ onStartCustomizing }: HeroSectionProps) {
+export default function HeroSection({ onStartCustomizing, onTryOn }: HeroSectionProps) {
   return (
-    <section className="relative h-screen flex items-center overflow-hidden">
-      {/* Background */}
+    <section className="relative min-h-[100dvh] flex items-center overflow-hidden">
       <div className="absolute inset-0">
-        <img src={heroBg} alt="Luxury eyewear" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/50 to-transparent" />
+        <img src={heroBg} alt="Premium eyewear" className="w-full h-full object-cover opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-        <div className="max-w-xl">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full pt-20">
+        <div className="max-w-lg">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-muted-foreground font-body text-xs tracking-[0.35em] uppercase mb-6"
+            className="section-label mb-4 sm:mb-6"
           >
-            Handcrafted Eyewear — Since 2024
+            Premium Custom Eyewear
           </motion.p>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="font-display text-6xl md:text-8xl font-light leading-[0.9] text-foreground mb-6"
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="font-display text-4xl sm:text-6xl lg:text-7xl font-light leading-[1] text-foreground mb-4 sm:mb-6"
           >
-            Design
+            Design Your
             <br />
-            <span className="font-semibold italic">Your</span> Pair
+            <span className="font-semibold italic gold-text">Signature</span> Pair
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-muted-foreground text-base font-body font-light leading-relaxed mb-10 max-w-sm"
+            transition={{ delay: 0.35 }}
+            className="text-muted-foreground text-sm sm:text-base font-body font-light leading-relaxed mb-8 max-w-sm"
           >
-            Customize every detail — from frame shape and color to lens tint and temple width. Made to order, made for you.
+            Customize every detail. Try them on with your camera. Made to order, crafted for you.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="flex gap-4"
+            transition={{ delay: 0.5 }}
+            className="flex flex-col sm:flex-row gap-3"
           >
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onStartCustomizing}
-              className="px-8 py-3.5 bg-primary text-primary-foreground font-body text-sm font-medium tracking-widest uppercase rounded-sm transition-all duration-300 hover:bg-foreground"
+              className="px-7 py-3 bg-primary text-primary-foreground font-body text-xs font-semibold tracking-[0.2em] uppercase rounded-sm"
             >
-              Start Customizing
+              Customize Now
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-3.5 border border-foreground/20 text-foreground font-body text-sm font-medium tracking-widest uppercase rounded-sm transition-all duration-300 hover:bg-foreground/5"
+              onClick={onTryOn}
+              className="px-7 py-3 border border-foreground/20 text-foreground font-body text-xs font-semibold tracking-[0.2em] uppercase rounded-sm hover:bg-foreground/5 transition-colors"
             >
-              View Collection
+              Virtual Try-On
             </motion.button>
           </motion.div>
         </div>
