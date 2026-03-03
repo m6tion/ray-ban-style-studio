@@ -28,99 +28,81 @@ const framePaths: Record<string, { outer: string; lens: string; bridge: string }
     lens: "M68,72 Q68,52 104,50 L196,50 Q232,52 232,72 L232,98 Q232,132 196,135 L104,135 Q68,132 68,98 Z M308,72 Q308,52 344,50 L436,50 Q472,52 472,72 L472,98 Q472,132 436,135 L344,135 Q308,132 308,98 Z",
     bridge: "M240,65 Q270,50 300,65",
   },
+  meta: {
+    outer: "M58,68 Q58,42 100,40 L210,40 Q242,42 242,68 L242,115 Q242,148 210,150 L100,150 Q58,148 58,115 Z M298,68 Q298,42 340,40 L450,40 Q482,42 482,68 L482,115 Q482,148 450,150 L340,150 Q298,148 298,115 Z",
+    lens: "M66,70 Q66,48 104,46 L206,46 Q234,48 234,70 L234,113 Q234,142 206,144 L104,144 Q66,142 66,113 Z M306,70 Q306,48 344,46 L446,46 Q474,48 474,70 L474,113 Q474,142 446,144 L344,144 Q306,142 306,113 Z",
+    bridge: "M242,62 Q270,48 298,62",
+  },
 };
 
 const lensColors: Record<string, string> = {
-  dark: "rgba(20,20,20,0.85)",
+  dark: "rgba(20,30,20,0.85)",
   blue: "rgba(30,60,140,0.7)",
   green: "rgba(30,100,60,0.65)",
-  amber: "rgba(180,120,30,0.6)",
-  rose: "rgba(180,50,80,0.55)",
-  mirror: "url(#mirrorGradient)",
-};
-
-const templeEndX: Record<string, number> = {
-  wayfarer: 42,
-  aviator: 35,
-  round: 85,
-  clubmaster: 42,
+  amber: "rgba(160,100,30,0.6)",
+  rose: "rgba(160,50,80,0.55)",
+  mirror: "url(#mirrorGrad)",
 };
 
 export default function SunglassesPreview({ frameShape, frameColor, lensColor, templeStyle }: SunglassesPreviewProps) {
   const paths = framePaths[frameShape] || framePaths.wayfarer;
   const lens = lensColors[lensColor] || lensColors.dark;
-  const endX = templeEndX[frameShape] || 42;
+  const tw = templeStyle === "thick" ? 7 : templeStyle === "thin" ? 2.5 : 4.5;
 
-  const templeWidth = templeStyle === "thick" ? 8 : templeStyle === "thin" ? 3 : 5;
+  // Smart glasses indicator dots for Meta
+  const isMeta = frameShape === "meta";
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        key={frameShape + lensColor}
-        initial={{ opacity: 0, scale: 0.9, rotateY: -15 }}
-        animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-        exit={{ opacity: 0, scale: 0.9, rotateY: 15 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        key={frameShape + lensColor + frameColor}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.35 }}
         className="flex items-center justify-center"
-        style={{ perspective: "800px" }}
       >
-        <svg viewBox="0 0 540 220" className="w-full max-w-lg drop-shadow-2xl" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 540 200" className="w-full max-w-lg" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="mirrorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="hsl(200,80%,60%)" stopOpacity="0.8" />
-              <stop offset="50%" stopColor="hsl(280,60%,50%)" stopOpacity="0.7" />
-              <stop offset="100%" stopColor="hsl(340,70%,55%)" stopOpacity="0.8" />
+            <linearGradient id="mirrorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="hsl(200,60%,65%)" stopOpacity="0.8" />
+              <stop offset="50%" stopColor="hsl(260,40%,60%)" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="hsl(330,50%,60%)" stopOpacity="0.8" />
             </linearGradient>
-            <linearGradient id="lensShine" x1="0%" y1="0%" x2="50%" y2="100%">
-              <stop offset="0%" stopColor="white" stopOpacity="0.25" />
+            <linearGradient id="shine" x1="0%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stopColor="white" stopOpacity="0.2" />
               <stop offset="100%" stopColor="white" stopOpacity="0" />
             </linearGradient>
-            <filter id="shadow">
-              <feDropShadow dx="0" dy="4" stdDeviation="8" floodColor="rgba(0,0,0,0.5)" />
+            <filter id="glow">
+              <feDropShadow dx="0" dy="2" stdDeviation="6" floodColor="rgba(0,0,0,0.35)" />
             </filter>
           </defs>
 
           {/* Temples */}
-          <motion.line
-            x1={endX} y1="65" x2="0" y2="55"
-            stroke={frameColor} strokeWidth={templeWidth} strokeLinecap="round"
-            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.3 }}
-          />
-          <motion.line
-            x1={540 - endX} y1="65" x2="540" y2="55"
-            stroke={frameColor} strokeWidth={templeWidth} strokeLinecap="round"
-            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.3 }}
-          />
+          <line x1="42" y1="60" x2="0" y2="50" stroke={frameColor} strokeWidth={tw} strokeLinecap="round" />
+          <line x1="498" y1="60" x2="540" y2="50" stroke={frameColor} strokeWidth={tw} strokeLinecap="round" />
 
           {/* Lens fill */}
-          <motion.path
-            d={paths.lens}
-            fill={lens}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.2 }}
-          />
-
-          {/* Lens shine */}
-          <path d={paths.lens} fill="url(#lensShine)" />
+          <path d={paths.lens} fill={lens} />
+          <path d={paths.lens} fill="url(#shine)" />
 
           {/* Frame */}
-          <motion.path
-            d={paths.outer}
-            fill="none"
-            stroke={frameColor}
-            strokeWidth="4"
-            filter="url(#shadow)"
-            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.8, ease: "easeInOut" }}
-          />
+          <path d={paths.outer} fill="none" stroke={frameColor} strokeWidth="3.5" filter="url(#glow)" />
 
           {/* Bridge */}
-          <motion.path
-            d={paths.bridge}
-            fill="none"
-            stroke={frameColor}
-            strokeWidth="3.5"
-            strokeLinecap="round"
-            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.4, delay: 0.5 }}
-          />
+          <path d={paths.bridge} fill="none" stroke={frameColor} strokeWidth="3" strokeLinecap="round" />
+
+          {/* Meta smart indicators */}
+          {isMeta && (
+            <>
+              <circle cx="74" cy="46" r="3" fill="hsl(200,80%,60%)" opacity="0.8">
+                <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="466" cy="46" r="3" fill="hsl(200,80%,60%)" opacity="0.8">
+                <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" begin="1s" />
+              </circle>
+            </>
+          )}
         </svg>
       </motion.div>
     </AnimatePresence>

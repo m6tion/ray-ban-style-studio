@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,41 +6,38 @@
 
 @layer base {
   :root {
-    --background: 36 30% 96%;
-    --foreground: 30 10% 15%;
+    --background: 220 15% 6%;
+    --foreground: 40 15% 92%;
 
-    --card: 36 25% 93%;
-    --card-foreground: 30 10% 15%;
+    --card: 220 12% 9%;
+    --card-foreground: 40 15% 92%;
 
-    --popover: 36 25% 93%;
-    --popover-foreground: 30 10% 15%;
+    --popover: 220 12% 9%;
+    --popover-foreground: 40 15% 92%;
 
-    --primary: 30 20% 25%;
-    --primary-foreground: 36 30% 96%;
+    --primary: 38 75% 55%;
+    --primary-foreground: 220 15% 6%;
 
-    --secondary: 33 20% 88%;
-    --secondary-foreground: 30 10% 15%;
+    --secondary: 220 10% 14%;
+    --secondary-foreground: 40 15% 92%;
 
-    --muted: 33 15% 90%;
-    --muted-foreground: 30 8% 50%;
+    --muted: 220 8% 18%;
+    --muted-foreground: 220 8% 52%;
 
-    --accent: 28 35% 40%;
-    --accent-foreground: 36 30% 96%;
+    --accent: 38 60% 48%;
+    --accent-foreground: 220 15% 6%;
 
     --destructive: 0 60% 50%;
-    --destructive-foreground: 36 30% 96%;
+    --destructive-foreground: 40 15% 92%;
 
-    --border: 30 15% 85%;
-    --input: 30 15% 85%;
-    --ring: 30 20% 25%;
+    --border: 220 10% 16%;
+    --input: 220 10% 16%;
+    --ring: 38 75% 55%;
 
     --radius: 0.5rem;
 
-    --font-display: 'Cormorant Garamond', serif;
+    --font-display: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
-
-    --shadow-soft: 0 4px 24px hsl(30 15% 15% / 0.06);
-    --shadow-card: 0 2px 16px hsl(30 15% 15% / 0.08);
   }
 }
 
@@ -48,56 +45,46 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
   }
-
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3 {
     font-family: var(--font-display);
   }
 }
 
 @layer components {
-  .text-brand {
-    @apply text-accent;
+  .gold-text {
+    @apply text-primary;
   }
 
   .glass-card {
-    @apply bg-card border border-border rounded-2xl;
-    box-shadow: var(--shadow-card);
+    @apply bg-card/80 backdrop-blur-md border border-border rounded-2xl;
   }
 
-  .option-button {
-    @apply px-4 py-3 rounded-xl border border-border bg-background text-foreground 
-           transition-all duration-300 cursor-pointer hover:border-accent/40 hover:shadow-sm;
+  .option-btn {
+    @apply w-full px-4 py-3 rounded-xl border border-border bg-secondary/40 text-foreground
+           transition-all duration-200 cursor-pointer hover:border-primary/30 hover:bg-secondary/70 text-left;
   }
 
-  .option-button-active {
-    @apply border-accent bg-accent/5 shadow-sm;
+  .option-btn-active {
+    @apply border-primary/60 bg-primary/10;
   }
 
-  .color-swatch {
-    @apply w-10 h-10 rounded-full cursor-pointer border-2 border-border
-           transition-all duration-300 hover:scale-110;
+  .swatch {
+    @apply w-9 h-9 rounded-full cursor-pointer border-2 border-border transition-all duration-200 hover:scale-110;
   }
 
-  .color-swatch-active {
-    @apply border-accent scale-110 shadow-md;
+  .swatch-active {
+    @apply border-primary scale-110 ring-2 ring-primary/20;
+  }
+
+  .section-label {
+    @apply text-muted-foreground text-[11px] font-body font-medium tracking-[0.25em] uppercase;
   }
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  background: hsl(36 25% 93%);
-}
-::-webkit-scrollbar-thumb {
-  background: hsl(30 15% 75%);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(30 20% 50%);
-}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: hsl(220 12% 9%); }
+::-webkit-scrollbar-thumb { background: hsl(220 8% 22%); border-radius: 2px; }
